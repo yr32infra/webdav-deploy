@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+  webdav:
+    image: ghcr.io/hacdias/webdav:v5.8.0@sha256:02d5b7d470e7ea1cf85a3573721efe2b36c606bfe7df72be59d685f91ac1f52e
+    hostname: webdav
+    container_name: webdav__webdav
+    restart: unless-stopped
+
+    environment:
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+
+    volumes:
+      - type: bind
+        source: ./config.yml
+        target: /config.yml
+        read_only: true
+
+      - type: bind
+        source: /data/webdav
+        target: /data
+
+    command: -c /config.yml
+
+    networks:
+      - default
+
+
+  cloudflared:
+    image: cloudflare/cloudflared:2025.9.1-amd64@sha256:e0d01332894a8adb2d55242f0e6cd28701722dbb7555523abac2f9cf39c22744
+    hostname: cloudflared
+    container_name: webdav__cloudflared
+    restart: unless-stopped
+
+    environment:
+      TUNNEL_METRICS: 0.0.0.0:9126
+      TUNNEL_LOGFILE: /dev/stdout
+
+    command: tunnel run --token ${TUNNEL_TOKEN}
+    user: root
+
+    networks:
+      default:
+
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+
+networks:
+  default:
+    name: webdav__default
