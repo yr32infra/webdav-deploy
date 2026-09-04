@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   webdav:
-    image: ghcr.io/hacdias/webdav:v5.15.0@sha256:ec929cdb51f884a0ea826679258bbf8edd28b66c9dc93614a5a60fa71e0ada19
+    image: ghcr.io/hacdias/webdav:v5.15.1@sha256:7fbcb867b704ed7aee2d2e8795c4836e86eb910244e7cc69278e8dfa5702a80b
     hostname: webdav
     container_name: webdav__webdav
     restart: unless-stopped
