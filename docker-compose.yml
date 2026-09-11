@@ -31,7 +31,7 @@ services:
           memory: 128m
 
   cloudflared:
-    image: cloudflare/cloudflared:2026.9.0-amd64@sha256:b7a6db450ae2e2f773d4fbe9ffb48e7b5fc451e17329daab1b4dda5a2487e2cc
+    image: cloudflare/cloudflared:2026.9.1-amd64@sha256:d68fa057087c359c79a255570e891215877ce48aa48ba6f28aac90d8077acbc3
     hostname: cloudflared
     container_name: webdav__cloudflared
     restart: unless-stopped
